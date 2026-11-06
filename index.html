@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมุดบันทึกการเรียนรู้ - วิชาการวัดและประเมินผลการเรียนรู้</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Sarabun & Kanit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cute: {
+                            pink: '#F472B6',      /* Soft Cute Pink */
+                            rose: '#FB7185',      /* Warm Soft Rose */
+                            light: '#FDF2F8',     /* Very Light Pastel Background */
+                            border: '#FBCFE8',    /* Pastel Pink Border */
+                            dark: '#9D174D',      /* Deep Berry Accent */
+                            subtle: '#FFF1F2'     /* Soft Coral Tint */
+                        }
+                    },
+                    fontFamily: {
+                        sarabun: ['Sarabun', 'sans-serif'],
+                        kanit: ['Kanit', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Kanit', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #fde8e8;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #f472b6;
+            border-radius: 8px;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-full { width: 100% !important; margin: 0 !important; padding: 0 !important; }
+        }
+    </style>
+</head>
+<body class="bg-rose-50/40 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-pink-100 dark:border-pink-950/50 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-400 via-rose-400 to-pink-300 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-pink-300/40">
+                        <i class="fa-solid fa-heart text-white animate-pulse"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight">สมุดบันทึกการเรียนรู้</h1>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium transition text-pink-700 bg-pink-100/70 dark:bg-pink-950/60 dark:text-pink-200">
+                        <i class="fa-solid fa-house-chimney mr-1.5"></i>หน้าแรก & ปก
+                    </button>
+                    <button onclick="switchTab('student')" id="nav-student" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-pink-50 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-user-graduate mr-1.5"></i>ข้อมูลผู้จัดทำ
+                    </button>
+                    <button onclick="switchTab('instructor')" id="nav-instructor" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-pink-50 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-chalkboard-user mr-1.5"></i>ข้อมูลอาจารย์
+                    </button>
+                    <button onclick="switchTab('preface')" id="nav-preface" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-pink-50 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-scroll mr-1.5"></i>คำนำ
+                    </button>
+                    <button onclick="switchTab('contract')" id="nav-contract" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-pink-50 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-file-signature mr-1.5"></i>สัญญาการเรียน
+                    </button>
+                    <button onclick="switchTab('weeks')" id="nav-weeks" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-pink-50 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-list-check mr-1.5"></i>บันทึก 16 สัปดาห์
+                    </button>
+                    <button onclick="switchTab('reflection')" id="nav-reflection" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-pink-50 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-heart mr-1.5"></i>ความรู้สึกต่อรายวิชา
+                    </button>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl text-pink-400 dark:text-pink-300 hover:bg-pink-50 dark:hover:bg-slate-800 transition" title="เปลี่ยนธีม">
+                        <i id="theme-icon" class="fa-solid fa-moon"></i>
+                    </button>
+                    <button onclick="window.print()" class="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-pink-700 bg-pink-50 border border-pink-200 dark:bg-pink-950/40 dark:border-pink-900 dark:text-pink-200 hover:bg-pink-100 transition shadow-sm">
+                        <i class="fa-solid fa-print"></i> พิมพ์ / PDF
+                    </button>
+                    <!-- Mobile Hamburger -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-pink-50 dark:hover:bg-slate-800">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-pink-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="switchTab('home'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-pink-50 dark:hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-house-chimney text-pink-400"></i> หน้าแรก & ปก
+            </button>
+            <button onclick="switchTab('student'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-pink-50 dark:hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-user-graduate text-pink-400"></i> ข้อมูลผู้จัดทำ
+            </button>
+            <button onclick="switchTab('instructor'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-pink-50 dark:hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-chalkboard-user text-rose-400"></i> ข้อมูลอาจารย์ผู้สอน
+            </button>
+            <button onclick="switchTab('preface'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-pink-50 dark:hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-scroll text-pink-400"></i> คำนำ
+            </button>
+            <button onclick="switchTab('contract'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-pink-50 dark:hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-file-signature text-amber-400"></i> สัญญาการเรียน
+            </button>
+            <button onclick="switchTab('weeks'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-pink-50 dark:hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-pink-400"></i> บันทึก 16 สัปดาห์
+            </button>
+            <button onclick="switchTab('reflection'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-pink-50 dark:hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-heart text-pink-400"></i> ความรู้สึกต่อรายวิชา
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= TAB 1: HOME & COVER ================= -->
+        <section id="tab-home" class="tab-content space-y-8">
+            <!-- Hero Banner / Front Cover Card -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 text-white p-8 sm:p-12 shadow-xl shadow-pink-200/50 dark:shadow-none">
+                <!-- Decorative background elements -->
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+                <div class="absolute right-1/4 -top-12 w-48 h-48 rounded-full bg-pink-200/20 blur-xl pointer-events-none"></div>
+
+                <div class="relative z-10 grid grid-cols-1 gap-8 items-center">
+                    <div class="space-y-4">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md text-white border border-white/30 shadow-sm">
+                            <i class="fa-solid fa-sparkles text-amber-200"></i> วิชาการวัดและประเมินผลการเรียนรู้
+                        </span>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight font-heading text-white">
+                            สมุดบันทึกการเรียนรู้
+                        </h1>
+                        <p class="text-pink-50 text-base sm:text-lg max-w-2xl font-light leading-relaxed">
+                            คลังรวบรวมองค์ความรู้ สรุปสาระสำคัญประจำสัปดาห์ 16 สัปดาห์ และแนวคิดเกี่ยวกับการวัดและประเมินผลการเรียนรู้
+                        </p>
+                        
+                        <div class="pt-2 flex flex-wrap gap-3 text-xs sm:text-sm font-medium text-white">
+                            <div class="flex items-center gap-2 bg-black/15 px-3.5 py-1.5 rounded-xl backdrop-blur-md">
+                                <i class="fa-solid fa-barcode text-amber-200"></i> รหัสวิชา: 21012110
+                            </div>
+                            <div class="flex items-center gap-2 bg-black/15 px-3.5 py-1.5 rounded-xl backdrop-blur-md">
+                                <i class="fa-solid fa-calendar-heart text-amber-200"></i> ภาคเรียนที่ 1 ปีการศึกษา 2569
+                            </div>
+                            <div class="flex items-center gap-2 bg-black/15 px-3.5 py-1.5 rounded-xl backdrop-blur-md">
+                                <i class="fa-solid fa-graduation-cap text-amber-200"></i> สาขานวัตกรรมและคอมพิวเตอร์ศึกษา
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Navigation Shortcuts -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Card 1: 16 Weeks Logbook -->
+                <div onclick="switchTab('weeks')" class="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-sm border border-pink-100 dark:border-slate-700/60 hover:border-pink-300 hover:shadow-md cursor-pointer group transition duration-200">
+                    <div class="w-10 h-10 rounded-2xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 dark:text-pink-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <h3 class="text-base font-bold font-heading text-slate-900 dark:text-white group-hover:text-pink-500 dark:group-hover:text-pink-300 transition">
+                        บันทึก 16 สัปดาห์
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
+                        สรุปเนื้อหาใบความรู้ 16 บท ทั้งพุทธิพิสัย จิตพิสัย ทักษะพิสัย
+                    </p>
+                    <div class="mt-3 flex items-center text-xs font-semibold text-pink-500 dark:text-pink-300">
+                        เข้าสู่บันทึก <i class="fa-solid fa-arrow-right ml-1 text-[10px] group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2: Student Profile -->
+                <div onclick="switchTab('student')" class="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-sm border border-pink-100 dark:border-slate-700/60 hover:border-pink-300 hover:shadow-md cursor-pointer group transition duration-200">
+                    <div class="w-10 h-10 rounded-2xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 dark:text-pink-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-base font-bold font-heading text-slate-900 dark:text-white group-hover:text-pink-500 dark:group-hover:text-pink-300 transition">
+                        ข้อมูลผู้จัดทำ
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
+                        ข้อมูลส่วนตัวผู้จัดทำ (นางสาวเหมือนฝัน สารีวงษ์) และคติประจำใจ
+                    </p>
+                    <div class="mt-3 flex items-center text-xs font-semibold text-pink-500 dark:text-pink-300">
+                        ดูข้อมูลผู้จัดทำ <i class="fa-solid fa-arrow-right ml-1 text-[10px] group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Card 3: Instructor Profile -->
+                <div onclick="switchTab('instructor')" class="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-sm border border-pink-100 dark:border-slate-700/60 hover:border-rose-300 hover:shadow-md cursor-pointer group transition duration-200">
+                    <div class="w-10 h-10 rounded-2xl bg-rose-100 dark:bg-rose-950/60 text-rose-500 dark:text-rose-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h3 class="text-base font-bold font-heading text-slate-900 dark:text-white group-hover:text-rose-500 dark:group-hover:text-rose-300 transition">
+                        ข้อมูลอาจารย์
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
+                        รายละเอียดอาจารย์ผู้สอน (รศ.ดร.สำราญ กำจัดภัย)
+                    </p>
+                    <div class="mt-3 flex items-center text-xs font-semibold text-rose-500 dark:text-rose-300">
+                        ดูข้อมูลอาจารย์ <i class="fa-solid fa-arrow-right ml-1 text-[10px] group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Card 4: Preface -->
+                <div onclick="switchTab('preface')" class="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-sm border border-pink-100 dark:border-slate-700/60 hover:border-pink-300 hover:shadow-md cursor-pointer group transition duration-200">
+                    <div class="w-10 h-10 rounded-2xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 dark:text-pink-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-scroll"></i>
+                    </div>
+                    <h3 class="text-base font-bold font-heading text-slate-900 dark:text-white group-hover:text-pink-500 dark:group-hover:text-pink-300 transition">
+                        คำนำ
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
+                        วัตถุประสงค์และสรุปภาพรวมในการจัดทำสมุดบันทึกการเรียนรู้
+                    </p>
+                    <div class="mt-3 flex items-center text-xs font-semibold text-pink-500 dark:text-pink-300">
+                        อ่านคำนำ <i class="fa-solid fa-arrow-right ml-1 text-[10px] group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Card 5: Learning Contract -->
+                <div onclick="switchTab('contract')" class="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-sm border border-pink-100 dark:border-slate-700/60 hover:border-amber-300 hover:shadow-md cursor-pointer group transition duration-200">
+                    <div class="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-500 dark:text-amber-300 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+                    <h3 class="text-base font-bold font-heading text-slate-900 dark:text-white group-hover:text-amber-500 dark:group-hover:text-amber-300 transition">
+                        สัญญาการเรียน
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
+                        ข้อตกลงและเป้าหมายการเรียนรู้ประจำภาคเรียน 1/2569
+                    </p>
+                    <div class="mt-3 flex items-center text-xs font-semibold text-amber-500 dark:text-amber-300">
+                        อ่านสัญญาการเรียน <i class="fa-solid fa-arrow-right ml-1 text-[10px] group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: STUDENT PROFILE ================= -->
+        <section id="tab-student" class="tab-content hidden space-y-8">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <!-- Student Profile Card -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-10 shadow-sm border border-pink-100 dark:border-slate-700 relative overflow-hidden group hover:border-pink-300 transition">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-pink-400/10 rounded-bl-full pointer-events-none"></div>
+                    
+                    <div class="flex items-center gap-4 mb-6 pb-4 border-b border-pink-100 dark:border-slate-700">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-pink-400 to-rose-400 text-white flex items-center justify-center text-2xl font-bold shadow-md shadow-pink-200 dark:shadow-none">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">ข้อมูลผู้จัดทำ (Student Profile)</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">นักศึกษาผู้จัดทำสมุดบันทึกการเรียนรู้</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <!-- Student Photo Section -->
+                        <div class="md:col-span-4 flex flex-col items-center justify-center space-y-3 p-4 bg-pink-50/50 dark:bg-slate-700/30 rounded-3xl border border-pink-100 dark:border-slate-700">
+                            <div class="relative w-44 h-56 rounded-2xl overflow-hidden shadow-md border-4 border-white dark:border-slate-600 bg-pink-100 dark:bg-slate-800 group/img">
+                                <img id="student-photo-img" src="https://placehold.co/400x520/f472b6/ffffff?text=Student+Profile" alt="รูปโปรไฟล์ผู้จัดทำ" class="w-full h-full object-cover transition duration-300" onerror="this.src='https://placehold.co/400x520/f472b6/ffffff?text=Student+Profile'">
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition flex flex-col items-center justify-center gap-2 p-2 no-print cursor-pointer" onclick="triggerUploadPhoto()">
+                                    <i class="fa-solid fa-camera text-white text-2xl"></i>
+                                    <span class="text-xs font-semibold text-white bg-pink-500/80 px-2.5 py-1 rounded-lg">อัปโหลดรูปภาพ</span>
+                                </div>
+                            </div>
+                            <input type="file" id="student-photo-input" accept="image/*" class="hidden" onchange="uploadStudentPhoto(event)">
+                            <button onclick="triggerUploadPhoto()" class="no-print px-3.5 py-1.5 rounded-xl text-xs font-semibold text-pink-700 bg-pink-100 hover:bg-pink-200 dark:bg-pink-950/60 dark:text-pink-300 transition">
+                                <i class="fa-solid fa-image mr-1.5"></i>เลือกรูปภาพผู้จัดทำ
+                            </button>
+                        </div>
+
+                        <!-- Info Grid -->
+                        <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/40 border border-pink-100 dark:border-slate-700 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-id-card"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">ชื่อ - สกุล / ชื่อเล่น</p>
+                                    <p class="font-semibold text-slate-800 dark:text-slate-200">นางสาวเหมือนฝัน สารีวงษ์ (ข้าวโพด)</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/40 border border-pink-100 dark:border-slate-700 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-barcode"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">รหัสนักศึกษา</p>
+                                    <p class="font-semibold font-mono text-pink-600 dark:text-pink-300">68115271221</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/40 border border-pink-100 dark:border-slate-700 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-cake-candles"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">วัน/เดือน/ปีเกิด</p>
+                                    <p class="font-medium text-slate-800 dark:text-slate-200">9 กรกฎาคม 2549</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/40 border border-pink-100 dark:border-slate-700 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-droplet"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">หมู่เลือด</p>
+                                    <p class="font-semibold text-slate-800 dark:text-slate-200">กรุ๊ป B</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/40 border border-pink-100 dark:border-slate-700 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">เบอร์โทรศัพท์</p>
+                                    <p class="font-medium font-mono text-slate-800 dark:text-slate-200">083-556-7232</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/40 border border-pink-100 dark:border-slate-700 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">การศึกษา</p>
+                                    <p class="font-medium text-slate-800 dark:text-slate-200">ชั้นปีที่ 2 สาขานวัตกรรมและคอมพิวเตอร์ศึกษา</p>
+                                    <p class="text-xs text-slate-500">คณะครุศาสตร์ มหาวิทยาลัยราชภัฏสกลนคร</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Motto Card -->
+                    <div class="mt-6 p-5 rounded-2xl bg-gradient-to-r from-pink-100/80 via-rose-100/60 to-pink-50 dark:from-pink-950/40 dark:via-rose-950/30 dark:to-slate-800 border border-pink-200 dark:border-pink-900/50 shadow-sm">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-pink-400 text-white flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-quote-left text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xs uppercase tracking-wider text-pink-700 dark:text-pink-300 font-heading">คติประจำใจ</h4>
+                                <p class="text-base sm:text-lg font-bold text-slate-800 dark:text-white mt-1 italic font-heading">
+                                    "เจ็บแล้วจำคือคน เจ็บแล้วทนคือคน . . . เก่ง"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: INSTRUCTOR PROFILE ================= -->
+        <section id="tab-instructor" class="tab-content hidden space-y-8">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <!-- Instructor Profile Card -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-10 shadow-sm border border-pink-100 dark:border-slate-700 relative overflow-hidden group hover:border-rose-300 transition">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-rose-400/10 rounded-bl-full pointer-events-none"></div>
+                    
+                    <div class="flex items-center gap-4 mb-6 pb-4 border-b border-pink-100 dark:border-slate-700">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-rose-400 to-pink-500 text-white flex items-center justify-center text-2xl font-bold shadow-md shadow-rose-200 dark:shadow-none">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">ข้อมูลอาจารย์ผู้สอน (Instructor Profile)</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">อาจารย์ประจำรายวิชาการวัดและประเมินผลการเรียนรู้</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex flex-col sm:flex-row items-center gap-6 p-6 rounded-2xl bg-gradient-to-r from-rose-50 to-pink-50 dark:from-slate-700/60 dark:to-slate-700/30 border border-rose-100 dark:border-slate-700">
+                            <!-- Instructor Photo Container -->
+                            <div class="relative w-36 h-48 sm:w-40 sm:h-52 rounded-2xl overflow-hidden shadow-md border-4 border-white dark:border-slate-600 bg-gradient-to-b from-rose-100 to-pink-200 dark:from-slate-800 dark:to-slate-900 shrink-0 group/img">
+                                <img id="instructor-photo-img" src="รูปหน้าเวบ_0004s_0002_Layer-590_2.png" alt="รองศาสตราจารย์ ดร. สำราญ กำจัดภัย" class="w-full h-full object-cover object-top transition duration-300" onerror="this.src='https://placehold.co/400x520/fb7185/ffffff?text=Assoc.+Prof.+Dr.+Samran'">
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition flex flex-col items-center justify-center gap-2 p-2 no-print cursor-pointer" onclick="triggerUploadInstructorPhoto()">
+                                    <i class="fa-solid fa-camera text-white text-xl"></i>
+                                    <span class="text-[10px] font-semibold text-white bg-rose-500/80 px-2 py-0.5 rounded-lg">เปลี่ยนรูปภาพ</span>
+                                </div>
+                            </div>
+                            <input type="file" id="instructor-photo-input" accept="image/*" class="hidden" onchange="uploadInstructorPhoto(event)">
+
+                            <div class="text-center sm:text-left space-y-2">
+                                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-200">
+                                    อาจารย์ผู้สอนประจำรายวิชา
+                                </span>
+                                <h3 class="font-bold text-xl sm:text-2xl font-heading text-slate-900 dark:text-white">รองศาสตราจารย์ ดร. สำราญ กำจัดภัย</h3>
+                                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">ผู้เชี่ยวชาญด้านการวัดและประเมินผลการศึกษา</p>
+                                <div class="pt-2 no-print">
+                                    <button onclick="triggerUploadInstructorPhoto()" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-rose-700 bg-rose-100 hover:bg-rose-200 dark:bg-rose-950/60 dark:text-rose-300 transition">
+                                        <i class="fa-solid fa-image mr-1"></i>อัปโหลด/เปลี่ยนรูปอาจารย์
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Affiliation Unit -->
+                        <div class="p-5 rounded-2xl bg-rose-50/80 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 space-y-3 shadow-sm">
+                            <h4 class="font-bold text-sm sm:text-base text-rose-900 dark:text-rose-200 font-heading flex items-center gap-2">
+                                <i class="fa-solid fa-building-columns text-rose-500"></i> อาจารย์ผู้สอนสังกัดหน่วยงานดังต่อไปนี้:
+                            </h4>
+                            <ul class="space-y-2 text-xs sm:text-sm pl-2">
+                                <li class="flex items-start gap-2.5 text-slate-700 dark:text-slate-200">
+                                    <i class="fa-solid fa-graduation-cap text-rose-400 mt-0.5"></i>
+                                    <div><strong class="text-slate-900 dark:text-white">คณะ:</strong> คณะครุศาสตร์</div>
+                                </li>
+                                <li class="flex items-start gap-2.5 text-slate-700 dark:text-slate-200">
+                                    <i class="fa-solid fa-book-open text-rose-400 mt-0.5"></i>
+                                    <div><strong class="text-slate-900 dark:text-white">สาขาวิชา:</strong> สาขาวิชาการวิจัยและการสอน (รวมถึงหลักสูตรวิจัยหลักสูตรและการสอน)</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/40 border border-pink-100 dark:border-slate-700 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-book-bookmark"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">รายวิชาที่สอน</p>
+                                    <p class="font-semibold text-slate-800 dark:text-slate-200">การวัดและประเมินผลการเรียนรู้</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/40 border border-pink-100 dark:border-slate-700 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-code"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">รหัสวิชา</p>
+                                    <p class="font-semibold font-mono text-rose-600 dark:text-rose-300">21012110</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 text-xs sm:text-sm text-amber-900 dark:text-amber-300 leading-relaxed flex items-start gap-3">
+                            <i class="fa-solid fa-circle-info text-amber-500 text-lg shrink-0 mt-0.5"></i>
+                            <div>
+                                <strong>บทบาทอาจารย์ผู้สอน:</strong> ถ่ายทอดองค์ความรู้และคำแนะนำเกี่ยวกับการสร้างเครื่องมือวัดผล การประเมินตามสภาพจริง และการวิเคราะห์คุณภาพข้อสอบอย่างเป็นระบบตลอดทั้ง 16 สัปดาห์
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: PREFACE ================= -->
+        <section id="tab-preface" class="tab-content hidden space-y-8">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <!-- Preface Card -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-10 shadow-sm border border-pink-100 dark:border-slate-700">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-pink-100 dark:border-slate-700">
+                        <div class="w-12 h-12 rounded-2xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 dark:text-pink-300 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">คำนำ (Preface)</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">บันทึกการเรียนรู้ วิชาการวัดและประเมินผลการเรียนรู้</p>
+                        </div>
+                    </div>
+
+                    <div class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed space-y-4 text-sm sm:text-base">
+                        <p class="indent-8">
+                            บันทึกการเรียนรู้ฉบับนี้เป็นส่วนหนึ่งของ <strong>วิชาการวัดและประเมินผลการเรียนรู้ (รหัสวิชา 21012110)</strong> ภาคเรียนที่ 1 ปีการศึกษา 2569 จัดทำขึ้นเพื่อสรุปองค์ความรู้ที่เกี่ยวข้องกับวิชาการวัดและประเมินผลการเรียนรู้ รวมถึงเกร็ดความรู้ต่าง ๆ เพื่อใช้ในการทบทวนองค์ความรู้ที่ได้รับในห้องเรียนให้เกิดความรู้และความเข้าใจในเนื้อหาวิชามากยิ่งขึ้น
+                        </p>
+                        <p class="indent-8">
+                            ผู้จัดทำขอขอบพระคุณ <strong>รองศาสตราจารย์ ดร. สำราญ กำจัดภัย</strong> อาจารย์ผู้สอนที่มอบความรู้และแนวทางการศึกษาเกี่ยวกับการวัดและประเมินผลการเรียนรู้ ผู้จัดทำหวังเป็นอย่างยิ่งว่าบันทึกการเรียนรู้ฉบับนี้จะสามารถให้ความรู้และประโยชน์แก่ผู้อ่านทุกท่านไม่มากก็น้อย หากมีข้อผิดพลาดประการใดขออภัยมา ณ ที่นี้ด้วย
+                        </p>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-pink-100 dark:border-slate-700 flex justify-end text-right">
+                        <div>
+                            <p class="font-bold text-slate-800 dark:text-slate-200">นางสาวเหมือนฝัน สารีวงษ์</p>
+                            <p class="text-xs text-pink-500 dark:text-pink-300">สาขานวัตกรรมและคอมพิวเตอร์ศึกษา</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 5: LEARNING CONTRACT ================= -->
+        <section id="tab-contract" class="tab-content hidden space-y-8">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <!-- Learning Contract Card -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-10 shadow-sm border border-pink-100 dark:border-slate-700">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-pink-100 dark:border-slate-700">
+                        <div class="w-12 h-12 rounded-2xl bg-rose-100 dark:bg-rose-950/60 text-rose-500 dark:text-rose-300 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-file-contract"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">ใบสัญญาการเรียน (Learning Contract)</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">ข้อตกลงและเป้าหมายการเรียนรู้ประจำภาคเรียนที่ 1/2569</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="p-4 rounded-2xl bg-pink-50/70 dark:bg-pink-950/40 border border-pink-100 dark:border-pink-900/50">
+                            <div class="text-pink-500 dark:text-pink-300 text-lg mb-1"><i class="fa-solid fa-clock"></i></div>
+                            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">ตรงต่อเวลา</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">เข้าเรียนตรงเวลา และส่งงานบันทึกการเรียนรู้ครบตามกำหนดทุกสัปดาห์</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-rose-50/70 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-900/50">
+                            <div class="text-rose-500 dark:text-rose-300 text-lg mb-1"><i class="fa-solid fa-brain"></i></div>
+                            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">ตั้งใจทบทวน</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">สรุปสาระสำคัญด้วยตนเอง ตรวจสอบความถูกต้องของเนื้อหาอย่างสม่ำเสมอ</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/50">
+                            <div class="text-amber-500 dark:text-amber-300 text-lg mb-1"><i class="fa-solid fa-laptop-code"></i></div>
+                            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">ประยุกต์ใช้นวัตกรรม</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">นำหลักการวัดและประเมินผลไปประยุกต์ใช้ในการสร้างสื่อและนวัตกรรมคอมพิวเตอร์ศึกษา</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 6: WEEKLY LOGS (1-16 WEEKS) ================= -->
+        <section id="tab-weeks" class="tab-content hidden space-y-6">
+            
+            <!-- Filter & Search Bar -->
+            <div class="bg-white dark:bg-slate-800 rounded-3xl p-4 sm:p-6 shadow-sm border border-pink-100 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="relative w-full sm:w-96">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-pink-300"></i>
+                    <input type="text" id="search-input" onkeyup="filterWeeks()" placeholder="ค้นหาบันทึก หรือ หัวข้อบทเรียน..." 
+                        class="w-full pl-10 pr-4 py-2.5 text-sm rounded-2xl border border-pink-200 dark:border-slate-700 bg-pink-50/30 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-400 transition">
+                </div>
+                <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 w-full sm:w-auto justify-end">
+                    <span>แสดงทั้งหมด <strong id="week-count" class="text-pink-500 dark:text-pink-300">16</strong> สัปดาห์</span>
+                </div>
+            </div>
+
+            <!-- Weeks Cards Grid -->
+            <div id="weeks-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- JS dynamic render target -->
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 5: REFLECTION & FEELINGS ================= -->
+        <section id="tab-reflection" class="tab-content hidden space-y-8">
+            <div class="max-w-4xl mx-auto space-y-6">
+                
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-10 shadow-sm border border-pink-100 dark:border-slate-700">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-pink-100 dark:border-slate-700">
+                        <div class="w-12 h-12 rounded-2xl bg-pink-100 dark:bg-pink-950/60 text-pink-500 dark:text-pink-300 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">ความรู้สึกที่มีต่อรายวิชาและอาจารย์ผู้สอน</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">การสะท้อนความรู้สึกและสิ่งที่ได้รับตลอดภาคเรียนที่ 1/2569</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Saved reflection content -->
+                        <div class="p-6 rounded-3xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-100 dark:border-pink-900/40 space-y-4">
+                            <h3 class="font-bold text-lg text-pink-900 dark:text-pink-200 flex items-center gap-2 font-heading">
+                                <i class="fa-solid fa-comment-heart text-pink-500"></i> ความรู้สึกและความประทับใจ
+                            </h3>
+                            <p id="reflection-text-display" class="text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
+                                วิชาการวัดและประเมินผลการเรียนรู้ ทำให้ได้รับความรู้และเข้าใจหลักการประเมินผลการเรียนรู้อย่างเป็นระบบ ตั้งแต่การจำแนกพฤติกรรมการเรียนรู้ของ Bloom การสร้างข้อสอบรูปแบบต่างๆ (อัตนัย, ถูกผิด, จับคู่, เลือกตอบ) ตลอดจนการตรวจสอบคุณภาพเครื่องมือ และการประเมินตามสภาพจริงโดยใช้ Rubrics และ Portfolio ขอขอบพระคุณ <strong>รองศาสตราจารย์ ดร. สำราญ กำจัดภัย</strong> ที่ให้คำแนะนำ ถ่ายทอดองค์ความรู้อย่างเข้มข้น และเป็นกันเองตลอดการเรียนการสอน
+                            </p>
+                        </div>
+
+                        <!-- Editable Custom Note -->
+                        <div class="bg-pink-50/40 dark:bg-slate-900 p-6 rounded-3xl border border-pink-100 dark:border-slate-700 space-y-3">
+                            <label for="custom-reflection" class="block font-bold text-sm text-slate-800 dark:text-slate-200 font-heading">
+                                <i class="fa-solid fa-pen-to-square text-rose-400 mr-1"></i> เพิ่มความรู้สึก/ความประทับใจส่วนตัวเพิ่มเติม:
+                            </label>
+                            <textarea id="custom-reflection" rows="4" placeholder="พิมพ์ความรู้สึกของคุณที่นี่..."
+                                class="w-full p-3.5 text-sm rounded-2xl border border-pink-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
+                            <div class="flex justify-end">
+                                <button onclick="saveReflection()" class="px-5 py-2.5 rounded-2xl bg-pink-400 hover:bg-pink-500 text-white font-medium text-sm transition shadow-md shadow-pink-200 dark:shadow-none">
+                                    <i class="fa-solid fa-floppy-disk mr-1.5"></i> บันทึกข้อความ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-pink-100 dark:border-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400 no-print">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>สมุดบันทึกการเรียนรู้ วิชาการวัดและประเมินผลการเรียนรู้ (21012110)</p>
+            <p class="mt-1">จัดทำโดย นางสาวเหมือนฝัน สารีวงษ์ • สาขานวัตกรรมและคอมพิวเตอร์ศึกษา • เสนอ รศ.ดร.สำราญ กำจัดภัย • มหาวิทยาลัยราชภัฏสกลนคร</p>
+        </div>
+    </footer>
+
+    <!-- ================= DETAIL MODAL (WEEKLY FULL DETAILS) ================= -->
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 no-print">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-pink-100 dark:border-slate-700 overflow-hidden transform transition-all">
+            
+            <!-- Modal Header -->
+            <div id="modal-header-bg" class="p-6 bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 text-white relative">
+                <button onclick="closeModal()" class="absolute right-5 top-5 w-8 h-8 rounded-full bg-black/15 hover:bg-black/30 text-white flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <span id="modal-week-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-white/25 text-white backdrop-blur-md">สัปดาห์ที่ 1</span>
+                <h3 id="modal-title" class="text-xl sm:text-2xl font-bold font-heading mt-2">ใบความรู้ที่ 1 แนวคิดเกี่ยวกับการเรียนรู้</h3>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div class="p-6 sm:p-8 overflow-y-auto custom-scrollbar space-y-6 text-slate-700 dark:text-slate-300 text-sm leading-relaxed" id="modal-body">
+                <!-- Content dynamically injected via JS -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-pink-50/50 dark:bg-slate-900 border-t border-pink-100 dark:border-slate-700 flex justify-between items-center">
+                <span class="text-xs text-slate-400">สมุดบันทึกการเรียนรู้ ภาคเรียนที่ 1/2569</span>
+                <button onclick="closeModal()" class="px-5 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium text-xs hover:bg-slate-300 transition">
+                    ปิดหน้าต่าง
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        // Data derived strictly from the provided PDF document
+        const weeklyData = [
+            {
+                week: 1,
+                title: "ใบความรู้ที่ 1 แนวคิดเกี่ยวกับการเรียนรู้",
+                topics: ["ความหมายของการเรียนรู้", "พฤติกรรมการเรียนรู้ด้านพุทธิพิสัย", "พฤติกรรมด้านจิตพิสัย", "พฤติกรรมด้านทักษะพิสัย", "สรุปแนวคิดเกี่ยวกับการเรียนรู้"],
+                summary: "การเรียนรู้ (Learning) หมายถึง การเปลี่ยนแปลงพฤติกรรมที่ค่อนข้างถาวรเนื่องจากการได้รับประสบการณ์ พฤติกรรมแบ่งออกเป็น 3 ด้านตาม Bloom (พุทธิพิสัย 6 ขั้น, จิตพิสัย 5 ขั้น, ทักษะพิสัย Dave 5 ขั้น / Simpson 7 ขั้น)",
+                details: `
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-pink-50 dark:bg-pink-950/40 border border-pink-100 dark:border-pink-900/40">
+                            <h4 class="font-bold text-pink-900 dark:text-pink-200 font-heading text-base">1. ความหมายของการเรียนรู้</h4>
+                            <p class="mt-1">หมายถึง การเปลี่ยนแปลงพฤติกรรมที่ค่อนข้างถาวร อันเนื่องมาจากการได้รับประสบการณ์</p>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-slate-900 dark:text-white font-heading text-base">2. พฤติกรรมด้านพุทธิพิสัย (Cognitive Domain - Bloom 6 ระดับ)</h4>
+                            <ol class="list-decimal list-inside space-y-1 pl-2">
+                                <li><strong>ความรู้:</strong> ความสามารถในการระลึกถึงเรื่องราวต่างๆ ได้อย่างถูกต้อง</li>
+                                <li><strong>ความเข้าใจ:</strong> ความสามารถจับใจความสำคัญของสิ่งเร้า</li>
+                                <li><strong>การนำไปใช้:</strong> ประยุกต์ความรู้ความเข้าใจไปใช้ในสถานการณ์ใหม่</li>
+                                <li><strong>การวิเคราะห์:</strong> แยกแยะเรื่องราวออกเป็นส่วนย่อยๆ ได้อย่างชัดเจน</li>
+                                <li><strong>การสังเคราะห์:</strong> ผสมผสานส่วนย่อยเข้าเป็นเรื่องเดียวกัน</li>
+                                <li><strong>การประเมินค่า:</strong> ใช้ดุลพินิจตัดสินคุณค่าของสิ่งใดสิ่งหนึ่ง</li>
+                            </ol>
+                        </div>
+
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-slate-900 dark:text-white font-heading text-base">3. พฤติกรรมด้านจิตพิสัย (Affective Domain - 5 ขั้น)</h4>
+                            <p>ความรู้สึก ความเชื่อ เจตคติ ค่านิยม ได้แก่: 1) ขั้นรับรู้ (Receiving) 2) ขั้นตอบสนอง (Responding) 3) ขั้นเห็นคุณค่า (Valuing) 4) ขั้นจัดระบบค่านิยม (Organization) 5) ขั้นสร้างลักษณะนิสัย (Characterization)</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-slate-900 dark:text-white font-heading text-base">4. พฤติกรรมด้านทักษะพิสัย (Psychomotor Domain)</h4>
+                            <p><strong>ลำดับขั้นของ Dave (5 ขั้น):</strong> รับรู้และเลียนแบบ ➔ ลงมือปฏิบัติและทำตามได้ ➔ ลดความผิดพลาดจนถูกต้อง ➔ ปฏิบัติได้อย่างชัดเจนต่อเนื่อง ➔ ปฏิบัติได้อย่างเป็นธรรมชาติ</p>
+                            <p><strong>ลำดับขั้นของ Simpson (7 ขั้น):</strong> การรับรู้ ➔ การเตรียมความพร้อม ➔ การตอบสนองตามแนวชี้แนะ ➔ การปฏิบัติได้ด้วยตนเอง ➔ การตอบสนองที่ซับซ้อน ➔ การดัดแปลง ➔ การริเริ่ม</p>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "แนวคิดเกี่ยวกับการเรียนรู้",
+                    icon: "fa-brain",
+                    branches: [
+                        { title: "ความหมายของการเรียนรู้", color: "pink", icon: "fa-lightbulb", items: ["เปลี่ยนแปลงพฤติกรรมค่อนข้างถาวร", "เกิดจากการได้รับประสบการณ์"] },
+                        { title: "พุทธิพิสัย (Bloom 6 ขั้น)", color: "purple", icon: "fa-cubes", items: ["1. ความรู้", "2. ความเข้าใจ", "3. การนำไปใช้", "4. การวิเคราะห์", "5. การสังเคราะห์", "6. การประเมินค่า"] },
+                        { title: "จิตพิสัย (5 ขั้น)", color: "rose", icon: "fa-heart", items: ["1. รับรู้ (Receiving)", "2. ตอบสนอง (Responding)", "3. เห็นคุณค่า (Valuing)", "4. จัดระบบ (Organization)", "5. สร้างลักษณะนิสัย (Characterization)"] },
+                        { title: "ทักษะพิสัย", color: "amber", icon: "fa-hand-sparkles", items: ["Dave 5 ขั้น (เลียนแบบ ➔ ทำตาม ➔ ถูกต้อง ➔ ต่อเนื่อง ➔ ธรรมชาติ)", "Simpson 7 ขั้น (รับรู้ ➔ เตรียมพร้อม ➔ แนวชี้แนะ ➔ ตนเอง ➔ ซับซ้อน ➔ ดัดแปลง ➔ ริเริ่ม)"] }
+                    ]
+                }
+            },
+            {
+                week: 2,
+                title: "ใบความรู้ที่ 2 แนวคิดเบื้องต้นเกี่ยวกับการวัดและประเมินผลการเรียนรู้",
+                topics: ["แนวคิดเกี่ยวกับการวัดผล", "แนวคิดเกี่ยวกับการประเมินผล", "แนวทางการนำผลการประเมินไปใช้ประโยชน์", "สรุปแนวคิดเบื้องต้น"],
+                summary: "การวัดผล (Measurement) คือกระบวนการกำหนดตัวเลข/สัญลักษณ์แทนปริมาณหรือคุณภาพของการกระทำ มี 2 แบบคือทางตรงและทางอ้อม ส่วนการประเมินผล (Evaluation) คือการตัดสินคุณค่าหรือคุณภาพตามเกณฑ์",
+                details: `
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-900/40">
+                                <h5 class="font-bold text-rose-800 dark:text-rose-200 font-heading">การวัดผล (Measurement)</h5>
+                                <p class="text-xs mt-1">กำหนดตัวเลขหรือสัญลักษณ์แทนปริมาณ/คุณภาพ มี 2 แบบคือ วัดทางตรง (รูปธรรม) และ วัดทางอ้อม (นามธรรม)</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-pink-50 dark:bg-pink-950/40 border border-pink-100 dark:border-pink-900/40">
+                                <h5 class="font-bold text-pink-800 dark:text-pink-200 font-heading">การประเมินผล (Evaluation)</h5>
+                                <p class="text-xs mt-1">กระบวนการตัดสินคุณค่าหรือคุณภาพของการเรียนรู้ตามเกณฑ์หรือมาตรฐานที่ตั้งไว้อย่างชัดเจน</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-slate-900 dark:text-white font-heading">องค์ประกอบของการวัดผล:</h4>
+                            <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm">
+                                <li>สิ่งที่ต้องการวัด</li>
+                                <li>วิธีการและเครื่องมือที่ใช้ในการวัดผล</li>
+                                <li>ข้อมูลตัวเลขหรือสัญลักษณ์ที่ได้จากการวัด</li>
+                            </ul>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-slate-900 dark:text-white font-heading">แนวทางการนำผลการประเมินไปใช้ประโยชน์ (4 ด้าน):</h4>
+                            <ol class="list-decimal list-inside space-y-1 text-xs sm:text-sm">
+                                <li>เพื่อวางแผนการจัดการเรียนรู้</li>
+                                <li>เพื่อปรับปรุงพัฒนาผู้เรียน</li>
+                                <li>เพื่อสรุปและตัดสินผลการเรียนรู้</li>
+                                <li>เพื่อรายงานต่อผู้ปกครองและผู้เกี่ยวข้อง</li>
+                            </ol>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "แนวคิดการวัดและประเมินผล",
+                    icon: "fa-calculator",
+                    branches: [
+                        { title: "การวัดผล (Measurement)", color: "pink", icon: "fa-ruler", items: ["กำหนดตัวเลข/สัญลักษณ์", "วัดทางตรง (รูปธรรม)", "วัดทางอ้อม (นามธรรม)"] },
+                        { title: "การประเมินผล (Evaluation)", color: "purple", icon: "fa-scale-balanced", items: ["ตัดสินคุณค่า/คุณภาพ", "เปรียบเทียบกับเกณฑ์มาตรฐาน"] },
+                        { title: "องค์ประกอบการวัดผล", color: "rose", icon: "fa-list-ol", items: ["1. สิ่งที่ต้องการวัด", "2. วิธีการ & เครื่องมือวัด", "3. ข้อมูลตัวเลข/สัญลักษณ์"] },
+                        { title: "การใช้ประโยชน์ 4 ด้าน", color: "amber", icon: "fa-chart-pie", items: ["1. วางแผนจัดการเรียนรู้", "2. ปรับปรุงพัฒนาผู้เรียน", "3. สรุป/ตัดสินผลการเรียน", "4. รายงานผู้ปกครอง & ผู้เกี่ยวข้อง"] }
+                    ]
+                }
+            },
+            {
+                week: 3,
+                title: "ใบความรู้ที่ 3 หลักการและจุดมุ่งหมายของการวัดและประเมินผลการเรียนรู้",
+                topics: ["ความสำคัญของการวัดและประเมินผล", "ประเภทของการวัดและประเมินผล", "หลักการวัดและประเมินผล", "จุดมุ่งหมายของการวัดและประเมินผล"],
+                summary: "การวัดและประเมินผลจำแนกตามการอ้างอิงเป็น 3 ประเภท (อิงตน, อิงกลุ่ม, อิงเกณฑ์) และแบ่งตามขั้นตอน 4 ประเภท (จัดวางตำแหน่ง, วินิจฉัย, เพื่อพัฒนา, สรุปผล)",
+                details: `
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/40">
+                            <h4 class="font-bold text-amber-900 dark:text-amber-200 font-heading">ความสำคัญต่อผู้เรียน & ผู้สอน</h4>
+                            <p class="text-xs mt-1">ช่วยให้ผู้เรียนทราบพื้นฐานและพัฒนาการของตนเอง ขณะเดียวกันช่วยให้ผู้สอนนำข้อมูลไปใช้วางแผน ปรับปรุงกระบวนการสอน และตัดสินเกรด</p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-slate-900 dark:text-white font-heading">ประเภทตามการอ้างอิง (3 ประเภท):</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>อิงตน:</strong> เปรียบเทียบผลการเรียนรู้กับความสามารถเดิมของตนเอง</li>
+                                <li><strong>อิงกลุ่ม:</strong> เปรียบเทียบผลเพื่อตัดสินความสามารถเทียบกับกลุ่มเพื่อน</li>
+                                <li><strong>อิงเกณฑ์:</strong> เปรียบเทียบผลกับเกณฑ์มาตรฐานที่กำหนดขึ้น</li>
+                            </ul>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-slate-900 dark:text-white font-heading">บทบาทและหน้าที่สำคัญ 5 ประการ:</h4>
+                            <p class="text-xs">1) องค์ประกอบของระบบการศึกษา 2) ส่วนหนึ่งของกระบวนการเรียนการสอน 3) เครื่องมือประกันคุณภาพการศึกษา 4) ตรวจสอบผลการเรียนรู้ 5) ให้ข้อมูลเพื่อการพัฒนา</p>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "หลักการ & จุดมุ่งหมาย",
+                    icon: "fa-bullseye",
+                    branches: [
+                        { title: "จำแนกตามการอ้างอิง", color: "pink", icon: "fa-users-between-lines", items: ["อิงตน (เปรียบเทียบกับตนเอง)", "อิงกลุ่ม (เปรียบเทียบกับกลุ่ม)", "อิงเกณฑ์ (เปรียบเทียบกับเกณฑ์)"] },
+                        { title: "จำแนกตามขั้นตอน", color: "purple", icon: "fa-timeline", items: ["1. จัดวางตำแหน่ง (Placement)", "2. วินิจฉัย (Diagnostic)", "3. เพื่อพัฒนา (Formative)", "4. สรุปผล (Summative)"] },
+                        { title: "หน้าที่สำคัญ 5 ประการ", color: "amber", icon: "fa-gears", items: ["องค์ประกอบระบบการศึกษา", "กระบวนการเรียนการสอน", "ประกันคุณภาพการศึกษา", "ตรวจสอบผลการเรียนรู้", "ให้ข้อมูลเพื่อการพัฒนา"] }
+                    ]
+                }
+            },
+            {
+                week: 4,
+                title: "ใบความรู้ที่ 4 แบบทดสอบความเรียง หรือแบบทดสอบอัตนัย",
+                topics: ["ความหมายของแบบทดสอบความเรียง", "หลักการหรือแนวทางในการสร้าง", "แนวทางการตรวจให้คะแนน", "สรุปแบบทดสอบความเรียง"],
+                summary: "แบบทดสอบความเรียงเป็นข้อคำถามที่ให้ผู้เรียนเขียนเรียบเรียงคำตอบอย่างอิสระ มุ่งวัดทักษะการคิดขั้นสูง จุดแข็งคือนำไปวัดระดับลึกซึ้งได้ดี จุดอ่อนคือความเป็นปรนัยในการให้คะแนน ซึ่งแก้ไขได้ด้วย Rubrics",
+                details: `
+                    <div class="space-y-4">
+                        <p><strong>ความหมาย:</strong> เป็นชุดข้อคำถามที่ผู้สอนกำหนดขึ้น เพื่อให้ผู้เรียนเขียนเรียบเรียงคำตอบอย่างอิสระ โดยใช้ความรู้ ความสามารถในการคิดระดับสูง เช่น วิเคราะห์ สังเคราะห์ และประเมินค่า</p>
+                        
+                        <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/50 space-y-2">
+                            <h4 class="font-bold text-slate-900 dark:text-white font-heading">หลักการสร้างแบบทดสอบความเรียง:</h4>
+                            <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm">
+                                <li>เลือกผลการเรียนรู้เกี่ยวกับการใช้สติปัญญาขั้นสูง</li>
+                                <li>เขียนข้อคำถามด้วยถ้อยคำชัดเจน ตรงตามผลการเรียนรู้</li>
+                                <li>ระบุน้ำหนักคะแนน ความยาวคำตอบ และช่วงเวลา</li>
+                                <li>สร้างเกณฑ์การให้คะแนน (Rubrics) อย่างละเอียดชัดเจนก่อนนำไปใช้</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-pink-50 dark:bg-pink-950/40 text-xs">
+                            <strong>จุดแข็ง:</strong> วัดพฤติกรรมการเรียนรู้ขั้นสูงได้ดี<br>
+                            <strong>จุดอ่อน:</strong> ความเป็นปรนัยในการตรวจคะแนน (แก้โดยใช้ Rubrics และตรวจทีละข้อคำถามสำหรับทุกคน)
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "แบบทดสอบความเรียง (อัตนัย)",
+                    icon: "fa-file-pen",
+                    branches: [
+                        { title: "ลักษณะสำคัญ", color: "pink", icon: "fa-align-left", items: ["ผู้เรียนเขียนตอบอิสระ", "มุ่งวัดทักษะการคิดขั้นสูง (วิเคราะห์, สังเคราะห์, ประเมินค่า)"] },
+                        { title: "หลักการสร้างข้อสอบ", color: "purple", icon: "fa-list-check", items: ["ระบุถ้อยคำชัดเจนตรงผลเรียนรู้", "ระบุคะแนน / เวลา / ความยาว", "จัดทำ Rubrics ก่อนนำไปใช้"] },
+                        { title: "จุดแข็ง & จุดอ่อน", color: "rose", icon: "fa-scale-unbalanced-flip", items: ["จุดแข็ง: วัดความรู้ลึกซึ้งได้ดี", "จุดอ่อน: ความเป็นปรนัยในการตรวจต่ำ (แก้ไขด้วย Rubrics)"] }
+                    ]
+                }
+            },
+            {
+                week: 5,
+                title: "ใบความรู้ที่ 5 แบบทดสอบปรนัยชนิดถูกผิด",
+                topics: ["ความหมายและลักษณะ", "หลักการและแนวทางในการสร้าง 16 ข้อ", "สรุปแบบทดสอบปรนัยชนิดถูกผิด"],
+                summary: "แบบทดสอบปรนัยชนิดถูกผิด (True or False Test) เป็นข้อความประโยคบอกเล่าหรือคำถาม ให้ผู้เรียนพิจารณาว่าถูกหรือผิด เหมาะสำหรับการค้นหาการแยกแยะข้อเท็จจริงออกจากความคิดเห็น",
+                details: `
+                    <div class="space-y-4">
+                        <p><strong>ลักษณะ:</strong> เลือกตอบจากสองทางเลือก เช่น ถูก-ผิด, จริง-ไม่จริง, ใช่-ไม่ใช่</p>
+                        
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-slate-900 dark:text-white font-heading">หลักการสร้างสำคัญ (สรุปจาก 16 ข้อ):</h4>
+                            <ul class="list-disc list-inside space-y-1 text-xs">
+                                <li>ข้อความต้องถูกหรือผิดอย่างแท้จริงเพียงอย่างเดียว</li>
+                                <li>ถามเพียงประเด็นเดียวในแต่ละข้อ</li>
+                                <li>หลีกเลี่ยงการลอกจากหนังสือเรียน หรือใช้ปฏิเสธซ้อน</li>
+                                <li>ควรมีจำนวนข้อถูกและข้อผิดใกล้เคียงกัน และกระจายกันอยู่</li>
+                                <li>หลีกเลี่ยงคำที่เป็นเครื่องชี้คำตอบเด่นชัด (เช่น ทุกๆ, ทั้งหมด, เท่านั้น)</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "แบบทดสอบชนิดถูกผิด",
+                    icon: "fa-square-check",
+                    branches: [
+                        { title: "ลักษณะข้อสอบ", color: "pink", icon: "fa-circle-question", items: ["เลือกตอบจาก 2 ทางเลือก (ถูก-ผิด, จริง-ไม่จริง)", "วัดความรู้ข้อเท็จจริง"] },
+                        { title: "หลักการสร้างสำคัญ", color: "purple", icon: "fa-check-double", items: ["ถูก/ผิด ชัดเจนเพียงอย่างเดียว", "ถามประเด็นเดียวในแต่ละข้อ", "สัดส่วนข้อถูก-ผิด ใกล้เคียงกัน"] },
+                        { title: "ข้อควรระวัง", color: "amber", icon: "fa-triangle-exclamation", items: ["ไม่ใช้ประโยคปฏิเสธซ้อน", "เลี่ยงคำชี้แนะ (เช่น ทั้งหมด, เท่านั้น)"] }
+                    ]
+                }
+            },
+            {
+                week: 6,
+                title: "ใบความรู้ที่ 6 แบบทดสอบปรนัยชนิดจับคู่",
+                topics: ["ความหมายและลักษณะ", "หลักการหรือแนวทางในการสร้าง 7 ข้อ", "สรุปแบบทดสอบปรนัยชนิดจับคู่"],
+                summary: "แบบทดสอบจับคู่ (Matching Test) วางกลุ่มคำ/วลี/สัญลักษณ์เป็น 2 คอลัมน์ (คอลัมน์ซ้าย คือ กลุ่มข้อความ / คอลัมน์ขวา คือ กลุ่มคำตอบ) ให้ผู้เรียนจับคู่ความสัมพันธ์",
+                details: `
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-900/40">
+                            <h4 class="font-bold text-rose-800 dark:text-rose-200 font-heading">หลักการสร้างข้อสอบจับคู่:</h4>
+                            <ol class="list-decimal list-inside space-y-1 text-xs mt-2">
+                                <li>คำ วลี สัญลักษณ์ในข้อคำถามและคำตอบควรเป็นเรื่องราวเนื้อหาเดียวกัน</li>
+                                <li>เขียนคำชี้แจงชัดเจน</li>
+                                <li>เพิ่มจำนวนตัวเลือกในคอลัมน์ขวาให้มากกว่าคอลัมน์ซ้าย เพื่อลดโอกาสในการเดาถูก</li>
+                                <li>จัดรายการข้อคำถามและคำตอบทั้งหมดให้อยู่ในกระดาษหน้าเดียวกัน</li>
+                            </ol>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "แบบทดสอบชนิดจับคู่",
+                    icon: "fa-link",
+                    branches: [
+                        { title: "โครงสร้างข้อสอบ", color: "pink", icon: "fa-columns-3", items: ["คอลัมน์ซ้าย (คำถาม/ข้อความ)", "คอลัมน์ขวา (คำตอบ/สัญลักษณ์)"] },
+                        { title: "หลักการสร้าง 7 ข้อ", color: "purple", icon: "fa-sliders", items: ["เรื่องราวเนื้อหาเดียวกัน", "คำตอบขวามากกว่าข้อถามซ้าย", "จัดให้อยู่ในกระดาษหน้าเดียวกัน"] },
+                        { title: "จุดเด่น", color: "rose", icon: "fa-thumbs-up", items: ["สร้างง่าย วัดความสัมพันธ์ได้ดี", "ตรวจให้คะแนนได้เป็นปรนัย"] }
+                    ]
+                }
+            },
+            {
+                week: 7,
+                title: "ใบความรู้ที่ 7 แบบทดสอบปรนัยชนิดเติมคำและชนิดตอบแบบสั้น",
+                topics: ["ความหมายของชนิดเติมคำและตอบแบบสั้น", "หลักการหรือแนวทางในการสร้าง", "สรุปเนื้อหา"],
+                summary: "แบบเติมคำ (Completion Test) ให้เติมคำ/วลีลงในช่องว่างของประโยคค้างไว้ ส่วนแบบตอบสั้น (Show Answer Test) อยู่ในรูปคำถาม/คำสั่ง ให้เขียนตอบสั้นๆ กระชับด้วยตนเอง",
+                details: `
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/50">
+                                <h5 class="font-bold font-heading text-slate-900 dark:text-white">ชนิดเติมคำ (Completion)</h5>
+                                <p class="text-xs mt-1">ให้ผู้เรียนหาคำตอบมาเติมลงในช่องว่างเพื่อให้ประโยคถูกต้องสมบูรณ์</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/50">
+                                <h5 class="font-bold font-heading text-slate-900 dark:text-white">ชนิดตอบแบบสั้น (Show Answer)</h5>
+                                <p class="text-xs mt-1">ตั้งคำถามให้เขียนตอบสั้นๆ กระชับ ตรงตามความจริง</p>
+                            </div>
+                        </div>
+                        <div class="text-xs space-y-1">
+                            <p><strong>แนวทางสร้าง:</strong> เขียนคำถามให้ชัดเจนเพื่อให้มีคำตอบที่ถูกต้องเพียงคำตอบเดียว เว้นช่องว่างให้ยาวเพียงพอ และหลีกเลี่ยงการตัดข้อความจากตำราโดยตรง</p>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "เติมคำ & ตอบแบบสั้น",
+                    icon: "fa-pen-to-square",
+                    branches: [
+                        { title: "ชนิดเติมคำ (Completion)", color: "pink", icon: "fa-i-cursor", items: ["เติมคำ/วลี ลงในช่องว่างประโยค", "มุ่งวัดความจำข้อเท็จจริง"] },
+                        { title: "ชนิดตอบแบบสั้น (Show Answer)", color: "purple", icon: "fa-comment-dots", items: ["เขียนตอบสั้นๆ กระชับตรงประเด็น", "วัดความรู้ความเข้าใจตรง"] },
+                        { title: "แนวทางการสร้าง", color: "amber", icon: "fa-wand-magic-sparkles", items: ["คำถามชัดเจน มีคำตอบเดียวถูกต้อง", "เว้นช่องว่างยาวเพียงพอ", "เลี่ยงการตัดข้อความตำราตรงๆ"] }
+                    ]
+                }
+            },
+            {
+                week: 8,
+                title: "ใบความรู้ที่ 8 แบบทดสอบปรนัยชนิดเลือกตอบ",
+                topics: ["ความหมายและลักษณะ", "หลักการและแนวทางในการสร้าง 10 ข้อ", "สรุปแบบทดสอบชนิดเลือกตอบ"],
+                summary: "แบบทดสอบชนิดเลือกตอบ (Multiple Choice Test) ประกอบด้วย 2 ส่วน คือ 1) ส่วนคำถามนำ (Stem) และ 2) ส่วนของตัวเลือก (Choices) ซึ่งมักมี 3-5 ตัวเลือก",
+                details: `
+                    <div class="space-y-4">
+                        <p><strong>องค์ประกอบข้อสอบเลือกตอบ:</strong> 1) คำถามนำ (Stem) คำถามตรงหรือประโยคไม่สมบูรณ์ 2) ตัวเลือก (Choices)</p>
+                        <div class="p-4 rounded-2xl bg-pink-50 dark:bg-pink-950/40 border border-pink-100 dark:border-pink-900/40">
+                            <h4 class="font-bold text-pink-900 dark:text-pink-200 font-heading text-xs sm:text-sm">หลักการสร้าง 10 ข้อสำคัญ:</h4>
+                            <ul class="list-disc list-inside space-y-1 text-xs mt-1">
+                                <li>คำถามนำต้องชัดเจน รัดกุม มีข้อมูลเพียงพอ</li>
+                                <li>ตัวเลือกควรสั้น กระชับ และสอดคล้องกับหลักไวยากรณ์</li>
+                                <li>หลีกเลี่ยงข้อความปฏิเสธเชิงลบ (หากจำเป็นต้องเน้นคำว่า "ไม่", "ยกเว้น")</li>
+                                <li>หลีกเลี่ยงคำชี้แนะคำตอบ และเน้นการวัดการประยุกต์ใช้ความรู้</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "แบบทดสอบชนิดเลือกตอบ",
+                    icon: "fa-list-check",
+                    branches: [
+                        { title: "องค์ประกอบ 2 ส่วน", color: "pink", icon: "fa-layer-group", items: ["1. คำถามนำ (Stem)", "2. ตัวเลือก (Choices 3-5 ตัวเลือก)"] },
+                        { title: "หลักการสร้างสำคัญ", color: "purple", icon: "fa-check", items: ["คำถามนำชัดเจน รัดกุม", "ตัวเลือกสั้น กระชับ สอดคล้องไวยากรณ์", "เน้นวัดการประยุกต์ใช้ความรู้"] },
+                        { title: "สิ่งที่ควรหลีกเลี่ยง", color: "rose", icon: "fa-ban", items: ["หลีกเลี่ยงคำถามปฏิเสธซ้อน", "หลีกเลี่ยงคำชี้แนะคำตอบเด่นชัด"] }
+                    ]
+                }
+            },
+            {
+                week: 9,
+                title: "ใบความรู้ที่ 9 การตรวจสอบคุณภาพของแบบทดสอบ",
+                topics: ["ความเที่ยงตรง (Validity)", "ความเป็นปรนัย (Objectivity)", "ความยาก (Difficulty)", "อำนาจจำแนก (Discrimination)", "ความเชื่อมั่น (Reliability)"],
+                summary: "การประเมินคุณภาพแบบทดสอบมี 5 ประการสำคัญ: ความเที่ยงตรง, ความเป็นปรนัย, ค่าความยาก (0.2 - 0.8), ค่าอำนาจจำแนก (0.2 - 1.0) และความเชื่อมั่น (ความคงเส้นคงวาของผลการวัด)",
+                details: `
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <div class="p-3.5 rounded-xl bg-pink-50/60 dark:bg-slate-700/50">
+                                <strong class="text-pink-500 dark:text-pink-300">1. ความเที่ยงตรง (Validity):</strong><br>
+                                วัดได้ตรงตามคุณลักษณะที่ต้องการ (เนื้อหา, โครงสร้าง, เกณฑ์สัมพันธ์)
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-pink-50/60 dark:bg-slate-700/50">
+                                <strong class="text-pink-500 dark:text-pink-300">2. ความเป็นปรนัย (Objectivity):</strong><br>
+                                ข้อความชัดเจน ตรวจให้คะแนนตรงกัน แปลความหมายคะแนนตรงกัน
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-pink-50/60 dark:bg-slate-700/50">
+                                <strong class="text-pink-500 dark:text-pink-300">3. ความยาก (Difficulty p):</strong><br>
+                                ค่าดัชนีที่ยอมรับได้ 0.20 ถึง 0.80
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-pink-50/60 dark:bg-slate-700/50">
+                                <strong class="text-pink-500 dark:text-pink-300">4. อำนาจจำแนก (Discrimination r):</strong><br>
+                                จำแนกคนเก่ง-อ่อน ค่าที่ยอมรับได้ 0.20 ถึง 1.00
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-xs">
+                            <strong>5. ความเชื่อมั่น (Reliability):</strong> ความคงเส้นคงวาในการวัด วัดกี่ครั้งก็ได้ผลใกล้เคียงเดิม
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "คุณภาพของแบบทดสอบ",
+                    icon: "fa-shield-halved",
+                    branches: [
+                        { title: "1. ความเที่ยงตรง (Validity)", color: "pink", icon: "fa-bullseye", items: ["วัดตรงคุณลักษณะที่ต้องการ (เนื้อหา/โครงสร้าง/เกณฑ์)"] },
+                        { title: "2. ความเป็นปรนัย (Objectivity)", color: "purple", icon: "fa-eye", items: ["ข้อความชัดเจน ตรวจคะแนนตรงกัน แปลความหมายตรงกัน"] },
+                        { title: "3. ดัชนีความยาก (p) & อำนาจจำแนก (r)", color: "rose", icon: "fa-chart-line", items: ["ค่าความยาก p ยอมรับได้ (0.20 - 0.80)", "อำนาจจำแนก r ยอมรับได้ (0.20 - 1.00)"] },
+                        { title: "4. ความเชื่อมั่น (Reliability)", color: "amber", icon: "fa-arrows-rotate", items: ["ความคงเส้นคงวาของผลการวัด"] }
+                    ]
+                }
+            },
+            {
+                week: 10,
+                title: "ใบความรู้ที่ 10 การวิเคราะห์ตัวชี้วัดสู่การออกแบบหน่วยการเรียนรู้",
+                topics: ["ความหมายมาตรฐานและตัวชี้วัด", "ประเภทตัวชี้วัด (Stiggins 5 ประเภท)", "การกำหนดหลักฐานการเรียนรู้", "ขั้นตอนการวิเคราะห์ตัวชี้วัด 5 ขั้น"],
+                summary: "วิเคราะห์ตัวชี้วัดตาม Stiggins 5 ประเภท (ความรู้ความเข้าใจ, การคิดอย่างมีเหตุผล, ทักษะการปฏิบัติ, ผลผลิต, จิตนิสัย) และกำหนดหลักฐานการเรียนรู้ (ผลผลิต & ผลการปฏิบัติ)",
+                details: `
+                    <div class="space-y-4 text-xs sm:text-sm">
+                        <p><strong>มาตรฐานการเรียนรู้:</strong> สิ่งที่ผู้เรียนควรรู้และทำได้เมื่อจบการศึกษา<br>
+                        <strong>ตัวชี้วัด:</strong> ข้อกำหนดระบุสิ่งที่ควรรู้และทำได้ในแต่ละระดับชั้น</p>
+                        
+                        <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/40">
+                            <h4 class="font-bold text-amber-900 dark:text-amber-200 font-heading">5 ขั้นตอนการวิเคราะห์ตัวชี้วัด:</h4>
+                            <ol class="list-decimal list-inside space-y-1 mt-1 text-xs">
+                                <li>ค้นหาคำสำคัญ (Key Word)</li>
+                                <li>กำหนดหลักฐานการเรียนรู้ (ผลผลิต / ผลการปฏิบัติ)</li>
+                                <li>กำหนดวิธีการวัดและประเมินผล</li>
+                                <li>กำหนดเครื่องมือวัดและประเมินผล</li>
+                                <li>กำหนดกิจกรรมการเรียนรู้</li>
+                            </ol>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "การวิเคราะห์ตัวชี้วัด",
+                    icon: "fa-diagram-project",
+                    branches: [
+                        { title: "ตัวชี้วัด 5 ประเภท (Stiggins)", color: "pink", icon: "fa-folder-tree", items: ["1. ความรู้ความเข้าใจ", "2. การคิดอย่างมีเหตุผล", "3. ทักษะการปฏิบัติ", "4. ผลผลิต", "5. จิตนิสัย"] },
+                        { title: "5 ขั้นตอนการวิเคราะห์", color: "purple", icon: "fa-arrow-right-1-9", items: ["1. ค้นหาคำสำคัญ (Key Word)", "2. กำหนดหลักฐานการเรียนรู้", "3. กำหนดวิธีการประเมิน", "4. กำหนดเครื่องมือวัด", "5. กำหนดกิจกรรมการเรียนรู้"] },
+                        { title: "หลักฐานการเรียนรู้", color: "rose", icon: "fa-box-archive", items: ["ผลผลิต (Product)", "ผลการปฏิบัติ (Performance)"] }
+                    ]
+                }
+            },
+            {
+                week: 11,
+                title: "ใบความรู้ที่ 11 การออกแบบหน่วยการเรียนรู้อิงมาตรฐานโดยใช้กระบวนการออกแบบย้อนกลับ",
+                topics: ["ความหมายของการออกแบบย้อนกลับ", "องค์ประกอบของหน่วยการเรียนรู้", "ขั้นตอน 3 ขั้นของการออกแบบย้อนกลับ (Backward Design)"],
+                summary: "การออกแบบย้อนกลับ (Backward Design) เริ่มจาก 1) ระบุผลลัพธ์ที่ต้องการ (ความเข้าใจคงทน, จิตพิสัย, ทักษะ) ➔ 2) กำหนดหลักฐานการเรียนรู้ที่ยอมรับได้ ➔ 3) วางแผนจัดประสบการณ์การเรียนรู้",
+                details: `
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-pink-50 dark:bg-pink-950/40 border border-pink-100 dark:border-pink-900/40">
+                            <h4 class="font-bold text-pink-900 dark:text-pink-200 font-heading">3 ขั้นตอนหลัก Backward Design:</h4>
+                            <div class="space-y-2 mt-2 text-xs">
+                                <div class="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-pink-200 dark:border-pink-800">
+                                    <strong>ขั้นที่ 1 ระบุผลลัพธ์ที่ต้องการ:</strong> กำหนดเป้าหมาย 3 ด้าน (ความเข้าใจที่คงทน, คุณลักษณะพึงประสงค์, ทักษะจำเป็น)
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-pink-200 dark:border-pink-800">
+                                    <strong>ขั้นที่ 2 กำหนดหลักฐานการเรียนรู้:</strong> ชิ้นงาน/ภาระงานที่ยอมรับได้
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-pink-200 dark:border-pink-800">
+                                    <strong>ขั้นที่ 3 วางแผนการจัดการเรียนรู้:</strong> ออกแบบกิจกรรมและประสบการณ์การเรียนรู้
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "Backward Design (การออกแบบย้อนกลับ)",
+                    icon: "fa-rotate-left",
+                    branches: [
+                        { title: "ขั้นที่ 1 ระบุผลลัพธ์ที่ต้องการ", color: "pink", icon: "fa-flag-checkered", items: ["กำหนดความเข้าใจคงทน", "กำหนดทักษะ & คุณลักษณะพึงประสงค์"] },
+                        { title: "ขั้นที่ 2 กำหนดหลักฐานการเรียนรู้", color: "purple", icon: "fa-file-certificate", items: ["กำหนดชิ้นงาน / ภาระงาน", "กำหนดเกณฑ์ประเมินยอมรับได้"] },
+                        { title: "ขั้นที่ 3 วางแผนจัดการเรียนรู้", color: "amber", icon: "fa-calendar-days", items: ["ออกแบบกิจกรรมการเรียนรู้", "เตรียมสื่อและประสบการณ์เรียนรู้"] }
+                    ]
+                }
+            },
+            {
+                week: 12,
+                title: "ใบความรู้ที่ 12 การประเมินจากการสื่อสารระหว่างบุคคล",
+                topics: ["ความรู้เบื้องต้นเกี่ยวกับการสื่อสาร", "องค์ประกอบ 4 ประการ", "วิธีการวัดและประเมินผล 6 ชนิด", "สรุปเนื้อหา"],
+                summary: "การประเมินจากการสื่อสารระหว่างบุคคล (Interpersonal Communication Assessment) อาศัยองค์ประกอบ 4 ประการ (ผู้ส่งสาร, สาร, สื่อ/ช่องทาง, ผู้รับสาร) ผ่าน 6 วิธีการวัด",
+                details: `
+                    <div class="space-y-4 text-xs sm:text-sm">
+                        <p><strong>องค์ประกอบการสื่อสาร (4 ประการ):</strong> ผู้ส่งสาร ➔ สาร ➔ สื่อ/ช่องทาง ➔ ผู้รับสาร</p>
+                        <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/50">
+                            <h4 class="font-bold font-heading text-slate-900 dark:text-white">6 วิธีการวัดและประเมินจากการสื่อสาร:</h4>
+                            <ol class="list-decimal list-inside space-y-1 mt-1 text-xs">
+                                <li>การถามตอบในชั้นเรียน</li>
+                                <li>การพบปะพูดคุยกับผู้เรียน</li>
+                                <li>การพูดคุยกับผู้ที่เกี่ยวข้องกับผู้เรียน</li>
+                                <li>การอภิปรายในชั้นเรียน</li>
+                                <li>การสอบปากเปล่า</li>
+                                <li>การบันทึกเหตุการณ์ของผู้เรียน</li>
+                            </ol>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "การประเมินจากการสื่อสาร",
+                    icon: "fa-comments",
+                    branches: [
+                        { title: "องค์ประกอบการสื่อสาร (4 ประการ)", color: "pink", icon: "fa-network-wired", items: ["1. ผู้ส่งสาร", "2. สาร (Content)", "3. สื่อ/ช่องทาง", "4. ผู้รับสาร"] },
+                        { title: "6 วิธีการประเมิน", color: "purple", icon: "fa-headset", items: ["1. ถามตอบในชั้นเรียน", "2. พบปะพูดคุยกับผู้เรียน", "3. พูดคุยผู้เกี่ยวข้อง", "4. การอภิปรายในชั้นเรียน", "5. การสอบปากเปล่า", "6. บันทึกเหตุการณ์ผู้เรียน"] }
+                    ]
+                }
+            },
+            {
+                week: 13,
+                title: "ใบความรู้ที่ 13 การประเมินการปฏิบัติ",
+                topics: ["แนวคิดและความหมาย", "ลักษณะสำคัญของการประเมินการปฏิบัติ", "ขั้นตอนการประเมิน 7 ขั้น", "จุดแข็งและจุดอ่อน"],
+                summary: "การประเมินการปฏิบัติ (Performance Assessment) มุ่งวัดทักษะความสามารถที่ไม่อาจวัดด้วยแบบทดสอบได้ ประเมินได้ทั้งกระบวนการ (Process) และผลงาน (Product)",
+                details: `
+                    <div class="space-y-4 text-xs sm:text-sm">
+                        <p><strong>จุดเด่น:</strong> สอดคล้องกับทฤษฎีการเรียนรู้ร่วมสมัย เน้นการลงมือปฏิบัติภาระงานที่ซับซ้อนในชีวิตจริง</p>
+                        
+                        <div class="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-900/40">
+                            <h4 class="font-bold text-rose-900 dark:text-rose-200 font-heading">7 ขั้นตอนการประเมินการปฏิบัติ:</h4>
+                            <p class="text-xs mt-1">1) กำหนดจุดมุ่งหมาย ➔ 2) กำหนดทักษะ/ความรู้ ➔ 3) ออกแบบงานภาระงาน ➔ 4) พัฒนาเกณฑ์การประเมิน ➔ 5) เลือกเครื่องมือเก็บข้อมูล ➔ 6) ทำใบงานชี้แจง ➔ 7) วางแผนลดความคลาดเคลื่อนในการให้คะแนน</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="p-2.5 rounded-xl bg-pink-50 dark:bg-pink-950/40 text-pink-800 dark:text-pink-200">
+                                <strong>จุดแข็ง:</strong> วัดความสามารถที่ทดสอบไม่ได้ ประเมินได้ทั้งกระบวนการและผลงาน
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-200">
+                                <strong>จุดอ่อน:</strong> ใช้เวลานาน สรุปอ้างอิงเนื้อหากว้างๆ ได้ยาก
+                            </div>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "การประเมินการปฏิบัติ",
+                    icon: "fa-person-running",
+                    branches: [
+                        { title: "มุ่งวัด 2 ส่วนสำคัญ", color: "pink", icon: "fa-gears", items: ["กระบวนการปฏิบัติ (Process)", "ผลงานการปฏิบัติ (Product)"] },
+                        { title: "7 ขั้นตอนการประเมิน", color: "purple", icon: "fa-list-ol", items: ["1. กำหนดจุดมุ่งหมาย", "2. กำหนดทักษะความรู้", "3. ออกแบบภาระงาน", "4. พัฒนาเกณฑ์ประเมิน", "5. เลือกเครื่องมือ", "6. จัดทำใบงาน", "7. ลดความคลาดเคลื่อนคะแนน"] },
+                        { title: "จุดแข็ง-จุดอ่อน", color: "rose", icon: "fa-balance-scale", items: ["จุดแข็ง: วัดทักษะปฏิบัติจริงซับซ้อนได้ดี", "จุดอ่อน: ใช้เวลาเยอะ สรุปผลกว้างๆ ยาก"] }
+                    ]
+                }
+            },
+            {
+                week: 14,
+                title: "ใบความรู้ที่ 14 การประเมินตามสภาพจริงในชั้นเรียน",
+                topics: ["แนวคิดและความหมาย", "ลักษณะสำคัญ", "ข้อแตกต่างกับการประเมินการปฏิบัติ", "แนวทางและขั้นตอนการประเมิน"],
+                summary: "การประเมินตามสภาพจริง (Authentic Assessment) ประเมินศักยภาพผู้เรียนแบบองค์รวม (พุทธิพิสัย, ทักษะพิสัย, จิตพิสัย) ผ่านการลงมือปฏิบัติที่สอดคล้องกับชีวิตจริง",
+                details: `
+                    <div class="space-y-4 text-xs sm:text-sm">
+                        <div class="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200">
+                            <strong>ข้อแตกต่าง:</strong> การประเมินการปฏิบัติเน้นการตอบสนอง/ภาระงาน แต่ <em>การประเมินตามสภาพจริง ให้ความสำคัญกับบริบทสิ่งแวดล้อมที่สอดคล้องกับชีวิตจริงเพิ่มเติม</em>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h4 class="font-bold font-heading text-slate-900 dark:text-white">ขั้นตอนการประเมินตามสภาพจริง (5 ขั้น):</h4>
+                            <ol class="list-decimal list-inside space-y-1 text-xs">
+                                <li>กำหนดงานหรือภาระงาน</li>
+                                <li>กำหนดขอบเขตของสิ่งประเมินให้ชัดเจน</li>
+                                <li>กำหนดวัตถุประสงค์และเป้าหมายการประเมิน</li>
+                                <li>กำหนดผู้ประเมิน (ผู้สอนร่วมกับผู้เรียน)</li>
+                                <li>เลือกวิธีการและเครื่องมือวัดและประเมินผล</li>
+                            </ol>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "การประเมินตามสภาพจริง",
+                    icon: "fa-earth-americas",
+                    branches: [
+                        { title: "ลักษณะสำคัญ", color: "pink", icon: "fa-certificate", items: ["เน้นบริบทชีวิตจริง (Real World)", "ประเมินองค์รวม (พุทธิ/ทักษะ/จิตพิสัย)"] },
+                        { title: "ข้อแตกต่างกับการปฏิบัติ", color: "purple", icon: "fa-code-compare", items: ["การปฏิบัติ: เน้นตัวภาระงาน", "ตามสภาพจริง: เน้นเพิ่มบริบทแวดล้อมจริง"] },
+                        { title: "5 ขั้นตอนการประเมิน", color: "amber", icon: "fa-bars-staggered", items: ["1. กำหนดภาระงาน", "2. กำหนดขอบเขต", "3. กำหนดวัตถุประสงค์", "4. กำหนดผู้ประเมิน", "5. เลือกวิธี & เครื่องมือ"] }
+                    ]
+                }
+            },
+            {
+                week: 15,
+                title: "ใบความรู้ที่ 15 การใช้รูบริกส์ในการวัดและประเมินผลการเรียนรู้",
+                topics: ["ความหมายของ Rubrics", "3 องค์ประกอบของ Rubrics", "การแบ่งประเภทของ Rubrics", "ขั้นตอนการสร้าง Rubrics 7 ขั้น"],
+                summary: "Rubrics คือชุดเกณฑ์มาตรฐานสำหรับการให้คะแนนคุณภาพการปฏิบัติงาน ประกอบด้วย 3 องค์ประกอบ (เกณฑ์, ระดับความสามารถ, คำบรรยายคุณภาพ)",
+                details: `
+                    <div class="space-y-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-700/50">
+                            <h4 class="font-bold font-heading text-slate-900 dark:text-white">3 องค์ประกอบของ Rubrics:</h4>
+                            <ul class="list-disc list-inside space-y-1 text-xs mt-1">
+                                <li><strong>1. เกณฑ์การประเมิน (Criteria):</strong> ประเด็นที่จะประเมิน</li>
+                                <li><strong>2. ระดับความสามารถ (Performance Level):</strong> ช่วงระดับคะแนน</li>
+                                <li><strong>3. การบรรยายคุณภาพ (Quality Description):</strong> คำอธิบายพฤติกรรมในแต่ละระดับ</li>
+                            </ul>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="p-3 rounded-xl bg-pink-50 dark:bg-pink-950/40">
+                                <strong>จำแนกตามการให้คะแนน:</strong><br>
+                                • Holistic Rubrics (องค์รวม)<br>
+                                • Analytic Rubrics (แยกส่วน)
+                            </div>
+                            <div class="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40">
+                                <strong>จำแนกตามการนำไปใช้:</strong><br>
+                                • General Rubrics (ทั่วไป)<br>
+                                • Task Specific Rubrics (เฉพาะงาน)
+                            </div>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "การใช้รูบริกส์ (Rubrics)",
+                    icon: "fa-table-cells-large",
+                    branches: [
+                        { title: "3 องค์ประกอบหลัก", color: "pink", icon: "fa-list", items: ["1. เกณฑ์การประเมิน (Criteria)", "2. ระดับความสามารถ (Performance Level)", "3. คำบรรยายคุณภาพ (Quality Description)"] },
+                        { title: "จำแนกตามการให้คะแนน", color: "purple", icon: "fa-sliders", items: ["Holistic Rubrics (องค์รวมภาพรวม)", "Analytic Rubrics (แยกส่วนละเอียด)"] },
+                        { title: "จำแนกตามการใช้งาน", color: "amber", icon: "fa-toolbox", items: ["General Rubrics (ประเมินทั่วไป)", "Task Specific Rubrics (เฉพาะงาน)"] }
+                    ]
+                }
+            },
+            {
+                week: 16,
+                title: "ใบความรู้ที่ 16 การประเมินโดยใช้แฟ้มสะสมผลงาน (Portfolio Assessment)",
+                topics: ["ความหมายและหลักการ", "จุดมุ่งหมาย", "ประเภทของแฟ้มสะสมผลงาน 3 ประเภท", "ขั้นตอนการประเมิน 4 ขั้น"],
+                summary: "การประเมินแฟ้มสะสมผลงาน (Portfolio Assessment) คือการประเมินจากการรวบรวมผลงานอย่างมีจุดมุ่งหมายและเป็นระบบตลอดช่วงเวลา มี 3 ประเภท (Working, Display, Assessment)",
+                details: `
+                    <div class="space-y-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-2xl bg-pink-50 dark:bg-pink-950/40 border border-pink-100 dark:border-pink-900/40">
+                            <h4 class="font-bold text-pink-900 dark:text-pink-200 font-heading">3 ประเภทของแฟ้มสะสมผลงาน:</h4>
+                            <ul class="list-disc list-inside space-y-1.5 mt-2 text-xs">
+                                <li><strong>1. Working Portfolio:</strong> แฟ้มเก็บรวบรวมหลักฐานผลงานระหว่างการเรียน เพื่อดูพัฒนาการ</li>
+                                <li><strong>2. Display / Show Portfolio:</strong> แฟ้มคัดเลือกผลงานที่ดีที่สุดเพื่อนำเสนอแสดงผลงาน</li>
+                                <li><strong>3. Assessment Portfolio:</strong> แฟ้มสะสมผลงานเพื่อการประเมินคุณภาพการเรียนรู้ตามเกณฑ์ที่กำหนด</li>
+                            </ul>
+                        </div>
+
+                        <div class="space-y-1 text-xs">
+                            <h4 class="font-bold font-heading text-slate-900 dark:text-white">4 ขั้นตอนการประเมิน:</h4>
+                            <p>1) ขั้นเตรียมการ ➔ 2) ขั้นจัดทำแฟ้มสะสมผลงาน ➔ 3) ขั้นประเมินแฟ้มที่สมบูรณ์ ➔ 4) ขั้นประชาสัมพันธ์ผลงาน</p>
+                        </div>
+                    </div>
+                `,
+                mindmap: {
+                    center: "Portfolio Assessment",
+                    icon: "fa-folder-closed",
+                    branches: [
+                        { title: "3 ประเภทของแฟ้ม", color: "pink", icon: "fa-folder-open", items: ["1. Working Portfolio (เพื่อเก็บพัฒนาการ)", "2. Display Portfolio (คัดเลือกผลงานเด่น)", "3. Assessment Portfolio (เพื่อการประเมิน)"] },
+                        { title: "4 ขั้นตอนการประเมิน", color: "purple", icon: "fa-arrows-to-dot", items: ["1. ขั้นเตรียมการ", "2. ขั้นจัดทำแฟ้มสะสมผลงาน", "3. ขั้นประเมินแฟ้มที่สมบูรณ์", "4. ขั้นประชาสัมพันธ์ผลงาน"] }
+                    ]
+                }
+            }
+        ];
+
+        // --- Navigation & Tab Switching ---
+        function switchTab(tabId) {
+            const tabs = ['home', 'student', 'instructor', 'preface', 'contract', 'weeks', 'reflection'];
+            tabs.forEach(t => {
+                const contentEl = document.getElementById(`tab-${t}`);
+                const navEl = document.getElementById(`nav-${t}`);
+                
+                if (contentEl) {
+                    if (t === tabId) {
+                        contentEl.classList.remove('hidden');
+                    } else {
+                        contentEl.classList.add('hidden');
+                    }
+                }
+                
+                if (navEl) {
+                    if (t === tabId) {
+                        navEl.className = 'nav-btn px-3 py-2 rounded-xl text-sm font-medium transition text-pink-700 bg-pink-100/70 dark:bg-pink-950/60 dark:text-pink-200';
+                    } else {
+                        navEl.className = 'nav-btn px-3 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-pink-50 dark:hover:bg-slate-800 transition';
+                    }
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Render Weekly Cards ---
+        function renderWeeks(dataToRender = weeklyData) {
+            const container = document.getElementById('weeks-grid');
+            const countEl = document.getElementById('week-count');
+            if (!container) return;
+
+            if (countEl) countEl.innerText = dataToRender.length;
+
+            if (dataToRender.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white dark:bg-slate-800 rounded-3xl border border-pink-100 dark:border-slate-700">
+                        <i class="fa-solid fa-magnifying-glass-minus text-4xl text-pink-300 mb-3"></i>
+                        <p class="text-slate-500 dark:text-slate-400 font-medium text-sm">ไม่พบข้อมูลบันทึกสัปดาห์ที่ตรงกับคำค้นหา</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = dataToRender.map(item => {
+                const topicsPills = item.topics.map(t => `<span class="bg-pink-50 dark:bg-slate-700 text-pink-600 dark:text-pink-300 text-[11px] px-2 py-0.5 rounded-md border border-pink-100 dark:border-slate-600"># ${t}</span>`).join(' ');
+                
+                return `
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-pink-100 dark:border-slate-700 hover:border-pink-300 hover:shadow-md transition flex flex-col justify-between group">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-pink-100 dark:bg-pink-950/60 text-pink-600 dark:text-pink-300 border border-pink-200 dark:border-pink-900">
+                                    สัปดาห์ที่ ${item.week}
+                                </span>
+                                <span class="text-xs text-slate-400 font-mono"><i class="fa-solid fa-book-bookmark text-pink-300 mr-1"></i>บทที่ ${item.week}</span>
+                            </div>
+                            <h3 class="font-bold text-base font-heading text-slate-900 dark:text-white group-hover:text-pink-500 dark:group-hover:text-pink-300 transition line-clamp-2">
+                                ${item.title}
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">
+                                ${item.summary}
+                            </p>
+                            <div class="flex flex-wrap gap-1 pt-1">
+                                ${topicsPills}
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-pink-50 dark:border-slate-700/60 flex items-center justify-between">
+                            <button onclick="openModal(${item.week})" class="w-full py-2.5 px-4 rounded-xl bg-pink-50 dark:bg-pink-950/40 hover:bg-pink-400 hover:text-white dark:hover:bg-pink-500 text-pink-600 dark:text-pink-300 text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-book-open"></i> อ่านบันทึก & ผังความคิด
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- Filter Weeks Search ---
+        function filterWeeks() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            if (!query) {
+                renderWeeks(weeklyData);
+                return;
+            }
+            const filtered = weeklyData.filter(item => 
+                item.title.toLowerCase().includes(query) ||
+                item.summary.toLowerCase().includes(query) ||
+                item.topics.some(t => t.toLowerCase().includes(query))
+            );
+            renderWeeks(filtered);
+        }
+
+        // --- Render Functions ---
+        // Helper to Render Visual Mind Map HTML
+        function renderMindMapHTML(mindmap) {
+            if (!mindmap) return '';
+            
+            const colorClasses = {
+                pink: {
+                    bg: "bg-pink-50/80 dark:bg-pink-950/30",
+                    border: "border-pink-200 dark:border-pink-900/50",
+                    badge: "bg-pink-100 text-pink-700 dark:bg-pink-900/60 dark:text-pink-200",
+                    dot: "bg-pink-400"
+                },
+                purple: {
+                    bg: "bg-purple-50/80 dark:bg-purple-950/30",
+                    border: "border-purple-200 dark:border-purple-900/50",
+                    badge: "bg-purple-100 text-purple-700 dark:bg-purple-900/60 dark:text-purple-200",
+                    dot: "bg-purple-400"
+                },
+                rose: {
+                    bg: "bg-rose-50/80 dark:bg-rose-950/30",
+                    border: "border-rose-200 dark:border-rose-900/50",
+                    badge: "bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-200",
+                    dot: "bg-rose-400"
+                },
+                amber: {
+                    bg: "bg-amber-50/80 dark:bg-amber-950/30",
+                    border: "border-amber-200 dark:border-amber-900/50",
+                    badge: "bg-amber-100 text-amber-700 dark:bg-amber-900/60 dark:text-amber-200",
+                    dot: "bg-amber-400"
+                }
+            };
+
+            const branchesHtml = mindmap.branches.map(b => {
+                const style = colorClasses[b.color] || colorClasses.pink;
+                const itemsList = b.items.map(item => `
+                    <li class="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
+                        <span class="w-1.5 h-1.5 rounded-full ${style.dot} mt-1.5 shrink-0"></span>
+                        <span>${item}</span>
+                    </li>
+                `).join('');
+
+                return `
+                    <div class="p-4 rounded-2xl ${style.bg} border ${style.border} space-y-2.5 transition hover:shadow-sm">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-1 rounded-xl text-xs font-bold ${style.badge} font-heading flex items-center gap-1.5">
+                                <i class="fa-solid ${b.icon || 'fa-circle-dot'} text-xs"></i>
+                                ${b.title}
+                            </span>
+                        </div>
+                        <ul class="space-y-1.5 pl-1">
+                            ${itemsList}
+                        </ul>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="mt-8 pt-6 border-t border-pink-100 dark:border-slate-700 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold font-heading text-slate-900 dark:text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-sitemap text-pink-500"></i> ผังความคิดสรุปประจำสัปดาห์ (Mind Map Summary)
+                        </h4>
+                        <span class="text-[10px] font-semibold text-pink-500 bg-pink-50 dark:bg-pink-950/50 px-2.5 py-1 rounded-full border border-pink-200 dark:border-pink-900">Visual Summary</span>
+                    </div>
+
+                    <!-- Center Mind Map Node -->
+                    <div class="flex justify-center my-2">
+                        <div class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 text-white font-bold font-heading text-sm shadow-md flex items-center gap-2">
+                            <i class="fa-solid ${mindmap.icon || 'fa-brain'} text-base animate-pulse"></i>
+                            <span>${mindmap.center}</span>
+                        </div>
+                    </div>
+
+                    <!-- Branches Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        ${branchesHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Modal Handlers
+        function openModal(weekNum) {
+            const data = weeklyData.find(w => w.week === weekNum);
+            if (!data) return;
+
+            document.getElementById('modal-week-badge').innerText = `สัปดาห์ที่ ${data.week}`;
+            document.getElementById('modal-title').innerText = data.title;
+            
+            // Build Topics list HTML
+            const topicsHtml = data.topics.map(t => `<span class="inline-block bg-pink-50 dark:bg-slate-700 text-pink-600 dark:text-pink-300 text-xs px-2.5 py-1 rounded-lg mr-1.5 mb-1.5 border border-pink-100 dark:border-slate-600"># ${t}</span>`).join('');
+            
+            // Mind Map HTML
+            const mindmapHtml = renderMindMapHTML(data.mindmap);
+
+            // Saved user note for this week
+            const userNoteKey = `week_note_${weekNum}`;
+            const savedNote = localStorage.getItem(userNoteKey) || '';
+
+            document.getElementById('modal-body').innerHTML = `
+                <div class="mb-4">${topicsHtml}</div>
+                <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-slate-900 border border-pink-100 dark:border-slate-700 mb-6">
+                    <h5 class="font-bold text-xs uppercase tracking-wider text-pink-400 mb-1">สรุปสาระสำคัญ</h5>
+                    <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium">${data.summary}</p>
+                </div>
+                ${data.details}
+                
+                <!-- Mind Map Section -->
+                ${mindmapHtml}
+
+                <!-- Personal Interactive Note Section -->
+                <div class="mt-8 pt-6 border-t border-pink-100 dark:border-slate-700">
+                    <h5 class="font-bold font-heading text-slate-900 dark:text-white text-sm mb-2">
+                        <i class="fa-solid fa-note-sticky text-amber-400 mr-1.5"></i>บันทึกเพิ่มเติมประจำสัปดาห์นี้
+                    </h5>
+                    <textarea id="modal-user-note" rows="3" placeholder="พิมพ์บันทึกหรือความเข้าใจเพิ่มเติมในสัปดาห์นี้..." 
+                        class="w-full p-3.5 text-xs rounded-2xl border border-pink-200 dark:border-slate-700 bg-pink-50/30 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-400">${savedNote}</textarea>
+                    <div class="flex justify-end mt-2">
+                        <button onclick="saveWeekNote(${weekNum})" class="px-4 py-1.5 rounded-xl bg-pink-400 hover:bg-pink-500 text-white text-xs font-medium transition shadow-sm">
+                            <i class="fa-solid fa-save mr-1"></i>บันทึกโน้ต
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function saveWeekNote(weekNum) {
+            const text = document.getElementById('modal-user-note').value;
+            localStorage.setItem(`week_note_${weekNum}`, text);
+            alertBox("บันทึกโน้ตเรียบร้อยแล้ว!");
+        }
+
+        function saveReflection() {
+            const val = document.getElementById('custom-reflection').value;
+            if(val.trim()){
+                localStorage.setItem('custom_course_reflection', val);
+                alertBox("บันทึกความรู้สึกเพิ่มเติมเรียบร้อยแล้ว!");
+            }
+        }
+
+        function loadReflection() {
+            const saved = localStorage.getItem('custom_course_reflection');
+            if (saved) {
+                document.getElementById('custom-reflection').value = saved;
+            }
+        }
+
+        // Custom Message Box instead of window.alert
+        function alertBox(msg) {
+            const box = document.createElement('div');
+            box.className = "fixed bottom-6 right-6 z-50 bg-slate-900 text-white dark:bg-pink-500 text-xs px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 transition transform animate-bounce";
+            box.innerHTML = `<i class="fa-solid fa-heart text-pink-300 dark:text-white text-base"></i> <span>${msg}</span>`;
+            document.body.appendChild(box);
+            setTimeout(() => box.remove(), 3000);
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            if (document.documentElement.classList.contains('dark')) {
+                icon.className = 'fa-solid fa-sun text-amber-300';
+            } else {
+                icon.className = 'fa-solid fa-moon';
+            }
+        }
+
+        // Mobile drawer menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Student Photo Upload Logic
+        function triggerUploadPhoto() {
+            document.getElementById('student-photo-input').click();
+        }
+
+        function uploadStudentPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('student-photo-img').src = e.target.result;
+                    localStorage.setItem('student_custom_photo', e.target.result);
+                    alertBox("บันทึกรูปภาพผู้จัดทำเรียบร้อยแล้ว!");
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function loadStudentPhoto() {
+            const savedPhoto = localStorage.getItem('student_custom_photo');
+            if (savedPhoto) {
+                document.getElementById('student-photo-img').src = savedPhoto;
+            }
+        }
+
+        // Instructor Photo Upload Logic
+        function triggerUploadInstructorPhoto() {
+            document.getElementById('instructor-photo-input').click();
+        }
+
+        function uploadInstructorPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('instructor-photo-img').src = e.target.result;
+                    localStorage.setItem('instructor_custom_photo', e.target.result);
+                    alertBox("บันทึกรูปภาพอาจารย์ผู้สอนเรียบร้อยแล้ว!");
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function loadInstructorPhoto() {
+            const savedPhoto = localStorage.getItem('instructor_custom_photo');
+            if (savedPhoto) {
+                document.getElementById('instructor-photo-img').src = savedPhoto;
+            }
+        }
+
+        // Init on load
+        window.onload = function() {
+            renderWeeks();
+            loadReflection();
+            loadStudentPhoto();
+            loadInstructorPhoto();
+        }
+    </script>
+</body>
+</html>
